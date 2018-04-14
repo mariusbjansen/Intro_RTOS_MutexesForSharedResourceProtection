@@ -66,13 +66,13 @@ int  main (void)
     INT8U err;
 /*
 *********************************************************************************************************
-* Initialize uCOS-II
+* Initialize uCOS-II 
 *********************************************************************************************************
 */
 
 // Add your code here!!
     OSInit();
-// End of your code!!
+// End of your code!!    
 
     //RandomSem   = OSSemCreate(1);                          /* Random number semaphore                  */
     RandomSem   = OSMutexCreate(0, &err);
@@ -84,9 +84,10 @@ int  main (void)
 *********************************************************************************************************
 */
 // Add your code here!!
-    OSTaskCreate(TaskStart, NULL, &StartStk[TASK_STK_SIZE-1], 1);
-    OSStart();
-// End of your code!!
+    
+        OSTaskCreate(TaskStart, NULL, &StartStk[TASK_STK_SIZE-1], 1);
+        OSStart();
+// End of your code!!    
     return 0;
 }
 
@@ -107,7 +108,7 @@ void  TaskStart (void *pdata)
 
 /*
 *********************************************************************************************************
-* Create the 10 tasks
+* Create the 10 tasks 
 *********************************************************************************************************
 */
 
@@ -128,13 +129,13 @@ void  TaskStart (void *pdata)
         OSCtxSwCtr = 0;                                    /* Clear context switch counter             */
 /*
 *********************************************************************************************************
-* Wait one second
+* Wait one second 
 *********************************************************************************************************
 */
-// Add your code here!!
+// Add your code here!!        
       OSTimeDlyHMSM(0, 0, 1, 0);
 // End of your code!!
-    }
+    }    
 }
 
 /*$PAGE*/
@@ -221,7 +222,7 @@ static  void  TaskStartCreateTasks (void)
     INT8U  i;
 /*
 *********************************************************************************************************
-* Create the 10 tasks
+* Create the 10 tasks 
 *********************************************************************************************************
 */
 // Add your code here!!
@@ -232,8 +233,8 @@ static  void  TaskStartCreateTasks (void)
 
 
 
-// End of your code!!
-}
+// End of your code!!    
+} 
 
 /*
 *********************************************************************************************************
@@ -253,7 +254,7 @@ void  Task (void *pdata)
     /* @Feb 17th, 2010 By: Amr Ali Abdel-Naby */
     /* Removed Linux simulation code and kept only Windows simulation code */
     srand(GetCurrentThreadId());
-
+    
     for (;;) {
 
         //OSSemPend(RandomSem, 0, &err);           /* Acquire semaphore to perform random numbers        */
@@ -262,7 +263,7 @@ void  Task (void *pdata)
         y = rand() % 15;                         /* Find Y position where task number will appear      */
         //OSSemPost(RandomSem);                    /* Release semaphore                                  */
         OSMutexPost(RandomSem);
-
+        
                                                  /* Display the task number on the screen              */
         /* @Feb 17th, 2010 By: Amr Ali Abdel-Naby */
         /* Changed the PC_DispChar to PC_DispStr to make the example work on Vista */
@@ -270,12 +271,12 @@ void  Task (void *pdata)
         PC_DispStr(x,(INT8U)(y+5),s , DISP_FGND_BLACK + DISP_BGND_GRAY);
 /*
 *********************************************************************************************************
-* Delay 1 clock tick
+* Delay 1 clock tick 
 *********************************************************************************************************
 */
 // Add your code here!!
       OSTimeDly(1);
-// End of your code!!
-
+// End of your code!!        
+        
     }
 }

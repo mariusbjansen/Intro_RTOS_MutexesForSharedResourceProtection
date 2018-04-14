@@ -43,7 +43,7 @@ OS_STK MyTaskStk[N_TASKS][TASK_STK_SIZE];
 OS_STK MyTaskStartStk[TASK_STK_SIZE];
 // End of your code!!
 char          TaskData[N_TASKS];                      /* Parameters to pass to each task               */
-OS_EVENT     *RandomSem;
+OS_EVENT     *RandomMutex;
 
 
 /*
@@ -78,7 +78,7 @@ int  main (void)
     OSInit();
 // End of your code!!
 
-    RandomSem   = OSSemCreate(1);                          /* Random number semaphore                  */
+	RandomMutex   = OSMutexCreate(0, &err);                /* Random number semaphore                  */
     PC_DispClrScr(DISP_FGND_WHITE + DISP_BGND_BLACK);      /* Clear the screen                         */
 
 /*
@@ -90,7 +90,7 @@ int  main (void)
 
     // remember stack is growing downwards, therefore passing end of MyTaskStartStk
     // TaskStart is a task itself and but will create the other ten tasks
-    OSTaskCreate(TaskStart, NULL, &MyTaskStartStk[TASK_STK_SIZE-1], 0);
+    OSTaskCreate(TaskStart, NULL, &MyTaskStartStk[TASK_STK_SIZE-1], 1);
     OSStart();
 
 // End of your code!!
@@ -237,7 +237,7 @@ for (i=0;i<N_TASKS;++i)
     TaskData[i] = i + '0'; // random generator mapping to ASCI symbols starting from 0x30 which is '0'
     // again remember stack is growing downwards, so passing &MyTaskStk[i][TASK_STK_SIZE-1] INSTEAD of
     // &MyTaskStk[i][0] which also is equal to &MyTaskStk[i]
-    OSTaskCreate(Task, (void *)&TaskData[i], &MyTaskStk[i][TASK_STK_SIZE-1], i+1);
+    OSTaskCreate(Task, (void *)&TaskData[i], &MyTaskStk[i][TASK_STK_SIZE-1], i+2);
 }
 // End of your code!!
 }
@@ -263,10 +263,10 @@ void  Task (void *pdata)
 
     for (;;) {
 
-        OSSemPend(RandomSem, 0, &err);           /* Acquire semaphore to perform random numbers        */
+        OSMutexPend(RandomMutex, 0, &err);       /* Acquire semaphore to perform random numbers        */
         x = rand() % 78;                         /* Find X position where task number will appear      */
         y = rand() % 15;                         /* Find Y position where task number will appear      */
-        OSSemPost(RandomSem);                    /* Release semaphore                                  */
+        OSMutexPost(RandomMutex);                /* Release semaphore                                  */
 
                                                  /* Display the task number on the screen              */
         /* @Feb 17th, 2010 By: Amr Ali Abdel-Naby */

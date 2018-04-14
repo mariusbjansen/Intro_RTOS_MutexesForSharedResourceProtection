@@ -2,10 +2,10 @@
 	https://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/
 	
 	Include directories:
-	..\Ex1-OS
-	..\..\..\..\..\uCOS-II\Source
-	..\..\..\..\..\uCOS-II\Ports\WIN32
-	..\..\..\..\..\Blocks\PC\CodeBlocks16.01
+	..\..\Ex1-OS
+	..\..\..\..\..\..\uCOS-II\Source
+	..\..\..\..\..\..\uCOS-II\Ports\WIN32
+	..\..\..\..\..\..\Blocks\PC\CodeBlocks16.01
 	
 	Link Libraries:
 	libwinmm.a
